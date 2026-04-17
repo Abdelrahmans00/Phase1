@@ -40,7 +40,7 @@ public class UserService {
     public User findByEmail(String email){
         try{
             return em.createQuery(
-                    "select u from user uwhere u.email= :email",User.class
+                    "select u from User u where u.email = :email", User.class
             ).setParameter("email", email).getSingleResult();
         } catch (Exception e) {
             return null;
