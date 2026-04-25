@@ -5,6 +5,8 @@ import com.example.phase1.dto.RegisterRequest;
 import com.example.phase1.dto.UpdateRequest;
 import com.example.phase1.entity.User;
 import com.example.phase1.service.UserService;
+import com.example.phase1.util.SessionManager;
+
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -74,7 +76,10 @@ public class UserResource {
         if(user ==null){
             return Response.status(401).entity("{\"message\":\"Invalid credentials\"}").build();
         }
-        return Response.ok("{\"message\":\"Login successful.\"}").build();
+        String token = SessionManager.createToken(user);
+        return Response.ok(
+                "{\"message\":\"Login successful.\",\"token\":\"" + token + "\"}"
+        ).build();
     }
 
     @PUT

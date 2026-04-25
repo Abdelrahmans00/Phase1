@@ -1,6 +1,8 @@
 package com.example.phase1.resource;
 
 import com.example.phase1.service.InventoryService;
+
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -20,6 +22,7 @@ public class InventoryResource {
     @EJB
     private InventoryService inventoryService;
 
+    @RolesAllowed("Organization")
     @POST
     @Path("/allocate")
     public Response allocate(Map<String, Object> body) {

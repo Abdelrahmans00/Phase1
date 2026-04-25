@@ -10,6 +10,8 @@ import com.example.phase1.entity.User;
 import com.example.phase1.service.CampaignService;
 import com.example.phase1.service.UserService;
 import com.example.phase1.util.SecurityUtil;
+
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,6 +33,7 @@ public class CampaignResource {
     private UserService userService;
 
     // Create Campaign
+    @RolesAllowed("Organization")
     @POST
     @Path("/create")
     public Response createCampaign(CampaignRequest request) {
@@ -100,6 +103,7 @@ public class CampaignResource {
     }
 
     // Update Status
+    @RolesAllowed("Organization")
     @PUT
     @Path("/{id}/status")
     public Response updateStatus(@PathParam("id") Long id, UpdateCampaignStatusRequest request) {
@@ -138,6 +142,7 @@ public class CampaignResource {
     }
 
     // Update Campaign Items
+    @RolesAllowed("Organization")
     @PUT
     @Path("/{id}/items")
     public Response updateItems(@PathParam("id") Long id, UpdateCampaignItemsRequest request) {
@@ -194,6 +199,7 @@ public class CampaignResource {
     }
 
     //Discover Campaigns
+    @RolesAllowed({"Donor", "Organization"})
     @GET
     public Response getActiveCampaigns(@QueryParam("category") String category) {
         List<Campaign> campaigns;
