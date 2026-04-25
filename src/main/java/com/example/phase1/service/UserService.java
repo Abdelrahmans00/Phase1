@@ -1,7 +1,5 @@
 package com.example.phase1.service;
 import com.example.phase1.entity.User;
-
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

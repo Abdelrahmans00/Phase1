@@ -21,6 +21,11 @@ public class CampaignItem {
     @Column(nullable = false)
     private Integer quantity;
 
+    @NotNull(message = "Received quantity is required")
+    @Min(value = 0, message = "Received quantity cannot be negative")
+    @Column(nullable = false)
+    private Integer receivedQuantity = 0;
+
     @ManyToOne
     @JoinColumn(name = "campaign_id", nullable = false)
     private Campaign campaign;
@@ -47,6 +52,14 @@ public class CampaignItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getReceivedQuantity() {
+        return receivedQuantity;
+    }
+
+    public void setReceivedQuantity(Integer receivedQuantity) {
+        this.receivedQuantity = receivedQuantity;
     }
 
     public Campaign getCampaign() {

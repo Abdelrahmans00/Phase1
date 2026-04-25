@@ -10,7 +10,6 @@ import com.example.phase1.service.CampaignService;
 import com.example.phase1.service.DonationService;
 import com.example.phase1.service.UserService;
 import com.example.phase1.util.SecurityUtil;
-
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

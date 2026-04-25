@@ -1,18 +1,17 @@
 package com.example.phase1.resource;
 
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.Date;
 import com.example.phase1.dto.LoginRequest;
 import com.example.phase1.dto.RegisterRequest;
 import com.example.phase1.dto.UpdateRequest;
 import com.example.phase1.entity.User;
 import com.example.phase1.service.UserService;
-
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)

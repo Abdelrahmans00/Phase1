@@ -2,7 +2,6 @@ package com.example.phase1.service;
 
 import com.example.phase1.entity.Campaign;
 import com.example.phase1.entity.CampaignItem;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +22,9 @@ public class CampaignService {
 
         for (CampaignItem item : items) {
             item.setCampaign(campaign);
+            if (item.getReceivedQuantity() == null) {
+                item.setReceivedQuantity(0);
+            }
             em.persist(item);
         }
 
@@ -57,6 +59,9 @@ public class CampaignService {
         // add new
         for (CampaignItem item : newItems) {
             item.setCampaign(campaign);
+            if (item.getReceivedQuantity() == null) {
+                item.setReceivedQuantity(0);
+            }
             campaign.getItems().add(item);
         }
 
