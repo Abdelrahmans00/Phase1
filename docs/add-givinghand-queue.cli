@@ -1,1 +1,0 @@
-/subsystem=messaging-activemq/server=default/jms-queue=GivingHandNotificationsQueue:add(entries=["java:/jms/queue/GivingHandNotificationsQueue"])
