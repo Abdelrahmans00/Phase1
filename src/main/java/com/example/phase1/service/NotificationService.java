@@ -1,13 +1,13 @@
 package com.example.phase1.service;
 
 import com.example.phase1.entity.NotificationEvent;
-import jakarta.annotation.Resource;
-import jakarta.ejb.Stateless;
-import jakarta.inject.Inject;
-import jakarta.jms.JMSContext;
-import jakarta.jms.Queue;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.JMSContext;
+import javax.jms.Queue;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

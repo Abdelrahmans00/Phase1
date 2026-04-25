@@ -5,12 +5,12 @@ import com.example.phase1.entity.CampaignItem;
 import com.example.phase1.entity.User;
 import com.example.phase1.entity.Warehouse;
 import com.example.phase1.entity.WarehouseItem;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Locale;
 

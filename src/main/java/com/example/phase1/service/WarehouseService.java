@@ -3,9 +3,9 @@ package com.example.phase1.service;
 import com.example.phase1.entity.User;
 import com.example.phase1.entity.Warehouse;
 import com.example.phase1.entity.WarehouseItem;
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Stateless

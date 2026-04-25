@@ -2,9 +2,9 @@ package com.example.phase1.service;
 
 import com.example.phase1.entity.Campaign;
 import com.example.phase1.entity.CampaignItem;
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 

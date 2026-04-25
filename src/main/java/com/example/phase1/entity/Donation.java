@@ -1,6 +1,6 @@
 package com.example.phase1.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
