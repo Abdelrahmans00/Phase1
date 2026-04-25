@@ -77,7 +77,7 @@ public class DonationResource {
                     .build();
         }
 
-        Donation donation = donationService.commit(donor, campaign, request.item_name, request.quantity);
+        Donation donation = donationService.commit(donor, request.campaign_id, request.item_name, request.quantity);
         if (donation == null) {
             return Response.status(400)
                     .entity("{\"message\":\"Item not found in campaign or insufficient remaining quantity\"}")
