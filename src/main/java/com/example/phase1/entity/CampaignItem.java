@@ -1,9 +1,9 @@
 package com.example.phase1.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class CampaignItem {
@@ -20,6 +20,11 @@ public class CampaignItem {
     @Min(value = 1, message = "Quantity must be at least 1")
     @Column(nullable = false)
     private Integer quantity;
+
+    @NotNull(message = "Received quantity is required")
+    @Min(value = 0, message = "Received quantity cannot be negative")
+    @Column(nullable = false)
+    private Integer receivedQuantity = 0;
 
     @ManyToOne
     @JoinColumn(name = "campaign_id", nullable = false)
@@ -47,6 +52,14 @@ public class CampaignItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getReceivedQuantity() {
+        return receivedQuantity;
+    }
+
+    public void setReceivedQuantity(Integer receivedQuantity) {
+        this.receivedQuantity = receivedQuantity;
     }
 
     public Campaign getCampaign() {

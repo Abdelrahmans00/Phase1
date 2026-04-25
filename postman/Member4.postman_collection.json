@@ -1,0 +1,265 @@
+{
+  "info": {
+    "name": "Phase1 Member4 Full Flow",
+    "_postman_id": "f44ad031-a2f6-4b86-9b16-7979f6e6818e",
+    "description": "Full flow for Member 4: register org, create campaign, warehouse inventory, allocate, donation event, and notifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1) Register Organization User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "register"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{organizationEmail}}\",\n  \"fullName\": \"Org Test\",\n  \"password\": \"pass123\",\n  \"role\": \"organization\",\n  \"birthday\": \"2000-01-01\",\n  \"bio\": \"test org\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2) Create Campaign",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = {};",
+              "try { jsonData = pm.response.json(); } catch (e) {}",
+              "if (jsonData.campaign_id) {",
+              "  pm.collectionVariables.set('campaignId', jsonData.campaign_id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/campaigns/create",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "campaigns",
+            "create"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizationEmail\": \"{{organizationEmail}}\",\n  \"title\": \"Winter Relief\",\n  \"description\": \"Need warm items\",\n  \"category\": \"Health\",\n  \"needed_items\": [\n    {\n      \"item_name\": \"Blankets\",\n      \"target_quantity\": 30\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "3) Add Inventory (Auto warehouse)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = {};",
+              "try { jsonData = pm.response.json(); } catch (e) {}",
+              "if (jsonData.warehouse_id) {",
+              "  pm.collectionVariables.set('warehouseId', jsonData.warehouse_id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/warehouse/0/add",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "warehouse",
+            "0",
+            "add"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizationEmail\": \"{{organizationEmail}}\",\n  \"item_name\": \"Blankets\",\n  \"quantity\": 11,\n  \"category\": \"Relief\"\n}"
+        }
+      }
+    },
+    {
+      "name": "4) Warehouse Dashboard",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/warehouse/dashboard?organizationEmail={{organizationEmail}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "warehouse",
+            "dashboard"
+          ],
+          "query": [
+            {
+              "key": "organizationEmail",
+              "value": "{{organizationEmail}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5) Allocate Inventory - Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/inventory/allocate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "inventory",
+            "allocate"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizationEmail\": \"{{organizationEmail}}\",\n  \"warehouse_id\": {{warehouseId}},\n  \"campaign_id\": {{campaignId}},\n  \"item_name\": \"Blankets\",\n  \"quantity\": 2\n}"
+        }
+      }
+    },
+    {
+      "name": "6) Allocate Inventory - Fail (Insufficient stock)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/inventory/allocate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "inventory",
+            "allocate"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizationEmail\": \"{{organizationEmail}}\",\n  \"warehouse_id\": {{warehouseId}},\n  \"campaign_id\": {{campaignId}},\n  \"item_name\": \"Blankets\",\n  \"quantity\": 99999\n}"
+        }
+      }
+    },
+    {
+      "name": "7) Donation Received Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/notifications/donation-received",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "notifications",
+            "donation-received"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"message\": \"Donation marked as Received for campaign {{campaignId}}\",\n  \"timestamp\": \"2026-04-25T10:00:00.000Z\"\n}"
+        }
+      }
+    },
+    {
+      "name": "8) Get Notifications",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/notifications?limit=50",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "notifications"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8080/Phase1"
+    },
+    {
+      "key": "organizationEmail",
+      "value": "org_test_1@example.com"
+    },
+    {
+      "key": "warehouseId",
+      "value": "0"
+    },
+    {
+      "key": "campaignId",
+      "value": "0"
+    }
+  ]
+}

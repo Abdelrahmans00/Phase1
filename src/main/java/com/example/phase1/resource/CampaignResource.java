@@ -10,11 +10,10 @@ import com.example.phase1.entity.User;
 import com.example.phase1.service.CampaignService;
 import com.example.phase1.service.UserService;
 import com.example.phase1.util.SecurityUtil;
-
-import javax.ejb.EJB;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ejb.EJB;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -222,6 +221,7 @@ public class CampaignResource {
                 Map<String, Object> itemMap = new HashMap<>();
                 itemMap.put("item_name", item.getName());
                 itemMap.put("target_quantity", item.getQuantity());
+                itemMap.put("received_quantity", item.getReceivedQuantity());
                 itemsList.add(itemMap);
             }
             campaignMap.put("needed_items", itemsList);

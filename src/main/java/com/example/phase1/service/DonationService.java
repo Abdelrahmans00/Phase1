@@ -4,10 +4,9 @@ import com.example.phase1.entity.Campaign;
 import com.example.phase1.entity.CampaignItem;
 import com.example.phase1.entity.Donation;
 import com.example.phase1.entity.User;
-
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
@@ -81,12 +80,15 @@ public class DonationService {
 
     // Advance status: COMMITTED -> RECEIVED or RECEIVED -> DISTRIBUTED
     public Donation advanceStatus(Donation donation) {
-        if ("COMMITTED".equals(donation.getStatus())) {
-            donation.setStatus("RECEIVED");
-        } else if ("RECEIVED".equals(donation.getStatus())) {
-            donation.setStatus("DISTRIBUTED");
-        } else {
-            return null;
+        switch (donation.getStatus()) {
+            case "COMMITTED":
+                donation.setStatus("RECEIVED");
+                break;
+            case "RECEIVED":
+                donation.setStatus("DISTRIBUTED");
+                break;
+            default:
+                return null;
         }
 
         donation.setUpdatedAt(new Date());
