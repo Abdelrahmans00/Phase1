@@ -10,6 +10,8 @@ import com.example.phase1.service.CampaignService;
 import com.example.phase1.service.DonationService;
 import com.example.phase1.service.UserService;
 import com.example.phase1.util.SecurityUtil;
+
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -34,6 +36,7 @@ public class DonationResource {
     private CampaignService campaignService;
 
     // Commit to Donate
+    @RolesAllowed("Donor")
     @POST
     @Path("/commit")
     public Response commit(CommitDonationRequest request) {
@@ -90,6 +93,7 @@ public class DonationResource {
     }
 
     // Edit Commitment (only if COMMITTED)
+    @RolesAllowed("Donor")
     @PUT
     @Path("/{id}")
     public Response updateDonation(@PathParam("id") Long id, UpdateDonationRequest request) {
@@ -137,6 +141,7 @@ public class DonationResource {
     }
 
     // Cancel Commitment (only if COMMITTED)
+    @RolesAllowed("Donor")
     @DELETE
     @Path("/{id}")
     public Response cancelDonation(@PathParam("id") Long id, @QueryParam("donorEmail") String donorEmail) {
@@ -170,6 +175,7 @@ public class DonationResource {
     }
 
     // Advance Status (COMMITTED->RECEIVED or RECEIVED->DISTRIBUTED)
+    @RolesAllowed("Organization")
     @PUT
     @Path("/{id}/status")
     public Response advanceStatus(@PathParam("id") Long id, AdvanceStatusRequest request) {
@@ -201,6 +207,7 @@ public class DonationResource {
     }
 
     // Get contribution history
+    @RolesAllowed("Donor")
     @GET
     @Path("/history")
     public Response getHistory(@QueryParam("donorEmail") String donorEmail) {
@@ -235,6 +242,7 @@ public class DonationResource {
     }
 
     // Get all my donations (donor view)
+    @RolesAllowed("Donor")
     @GET
     @Path("/my")
     public Response getMyDonations(@QueryParam("donorEmail") String donorEmail) {

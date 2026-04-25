@@ -70,13 +70,19 @@ public class CampaignService {
 
     public List<Campaign> getActiveCampaigns() {
         return em.createQuery(
-                "SELECT c FROM Campaign c WHERE c.status = 'Open' ORDER BY c.createdDate DESC",
+                "SELECT DISTINCT c FROM Campaign c " +
+                        "JOIN FETCH c.items " +
+                        "JOIN FETCH c.organization " +
+                        "WHERE c.status = 'Open' ORDER BY c.createdDate DESC",
                 Campaign.class).getResultList();
     }
 
     public List<Campaign> getActiveCampaignsByCategory(String category) {
         return em.createQuery(
-                "SELECT c FROM Campaign c WHERE c.status = 'Open' AND c.category = :category ORDER BY c.createdDate DESC",
+                "SELECT DISTINCT c FROM Campaign c " +
+                        "JOIN FETCH c.items " +
+                        "JOIN FETCH c.organization " +
+                        "WHERE c.status = 'Open' AND c.category = :category ORDER BY c.createdDate DESC",
                 Campaign.class).setParameter("category", category).getResultList();
     }
 

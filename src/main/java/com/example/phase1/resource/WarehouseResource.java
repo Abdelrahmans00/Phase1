@@ -6,6 +6,8 @@ import com.example.phase1.entity.WarehouseItem;
 import com.example.phase1.service.UserService;
 import com.example.phase1.service.WarehouseService;
 import com.example.phase1.util.SecurityUtil;
+
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +28,7 @@ public class WarehouseResource {
     @EJB
     private UserService userService;
 
+    @RolesAllowed("Organization")
     @POST
     @Path("/{warehouse_id}/add")
     public Response addInventory(@PathParam("warehouse_id") Long warehouseId, Map<String, Object> body) {
@@ -74,6 +77,7 @@ public class WarehouseResource {
         return Response.ok(response).build();
     }
 
+    @RolesAllowed("Organization")
     @GET
     @Path("/dashboard")
     public Response getOrganizationInventory(@QueryParam("organizationEmail") String organizationEmail) {
